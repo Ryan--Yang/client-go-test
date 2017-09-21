@@ -148,6 +148,7 @@ func main() {
 					Port: 7053,
 				},
 			},
+			Selector: deployment.Labels,
 		},
 	}
 	fmt.Println("Creating service...")
