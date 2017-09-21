@@ -94,7 +94,8 @@ func main() {
 			Template: apiv1.PodTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{
 					Labels: map[string]string{
-						"app": "e2e-fabric",
+						"io.daocloud.dce.template": "e2e-fabric",
+						"io.daocloud.dce.app":      "e2e-fabric",
 					},
 				},
 				Spec: apiv1.PodSpec{
