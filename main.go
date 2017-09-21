@@ -93,7 +93,7 @@ func main() {
 			Replicas: int32Ptr(1),
 			Selector: &metav1.LabelSelector{
 				MatchLabels: map[string]string{
-					"service": "demo-deployment",
+					"io.daocloud.dce.app": "demo-deployment",
 				},
 			},
 			Template: apiv1.PodTemplateSpec{
