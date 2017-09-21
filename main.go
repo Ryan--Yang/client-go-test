@@ -148,7 +148,9 @@ func main() {
 					Port: 7053,
 				},
 			},
-			Selector: deployment.Labels,
+			Selector: map[string]string{
+				"service": "demo-deployment",
+			},
 		},
 	}
 	fmt.Println("Creating service...")
