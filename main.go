@@ -22,7 +22,7 @@ import (
 	_ "flag"
 	"fmt"
 	_ "os"
-	_ "time"
+	"time"
 
 	appsv1beta1 "k8s.io/api/apps/v1beta1"
 	apiv1 "k8s.io/api/core/v1"
@@ -83,7 +83,7 @@ func main() {
 		fmt.Println("pod name: %s ", pod.Name)
 	}
 
-	deploymentsClient := clientset.AppsV1beta1().Deployments(apiv1.NamespaceDefault)
+	deploymentsClient := clientset.AppsV1beta1().Deployments("yifan")
 
 	deployment := &appsv1beta1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
@@ -94,7 +94,7 @@ func main() {
 			Template: apiv1.PodTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{
 					Labels: map[string]string{
-						"app": "demo",
+						"app": "e2e-fabric",
 					},
 				},
 				Spec: apiv1.PodSpec{
@@ -124,6 +124,16 @@ func main() {
 	}
 	fmt.Printf("Created deployment %q.\n", result.GetObjectMeta().GetName())
 
+	time.Sleep(10 * time.Second)
+
+	deps2, err := clientset.AppsV1beta1().Deployments("").List(metav1.ListOptions{})
+	if err != nil {
+		panic(err.Error())
+	}
+	fmt.Printf("There are %d deps in the cluster\n", len(deps2.Items))
+	for _, dep := range deps2.Items {
+		fmt.Println("deployment name : %s ", dep.Name)
+	}
 	/*
 		// 创建pod
 		pod := new(v1.Pod)
