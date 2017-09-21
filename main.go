@@ -91,9 +91,11 @@ func main() {
 		},
 		Spec: appsv1beta1.DeploymentSpec{
 			Replicas: int32Ptr(1),
+
 			Template: apiv1.PodTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{
 					Labels: map[string]string{
+						"service":                  "demo-deployment",
 						"io.daocloud.dce.template": "e2e-fabric",
 						"io.daocloud.dce.app":      "e2e-fabric",
 					},
