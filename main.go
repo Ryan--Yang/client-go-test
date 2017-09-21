@@ -110,6 +110,7 @@ func main() {
 									ContainerPort: 80,
 								},
 							},
+							ImagePullPolicy: apiv1.PullAlways,
 						},
 					},
 				},
@@ -124,6 +125,37 @@ func main() {
 		panic(err)
 	}
 	fmt.Printf("Created deployment %q.\n", result.GetObjectMeta().GetName())
+
+	servicesClient := clientset.CoreV1().Services("yifan")
+	service := &apiv1.Service{
+		ObjectMeta: metav1.ObjectMeta{
+			Name: "demo-deployment",
+			Labels: map[string]string{
+				"io.daocloud.dce.template": "e2e-fabric",
+				"io.daocloud.dce.app":      "e2e-fabric",
+			},
+		},
+
+		Spec: apiv1.ServiceSpec{
+			Type: apiv1.ServiceTypeClusterIP,
+			Ports: []apiv1.ServicePort{
+				{
+					Name: "7051",
+					Port: 7051,
+				},
+				{
+					Name: "7053",
+					Port: 7053,
+				},
+			},
+		},
+	}
+	fmt.Println("Creating service...")
+	result2, err := servicesClient.Create(service)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Created service %q.\n", result2.GetObjectMeta().GetName())
 
 	time.Sleep(10 * time.Second)
 
