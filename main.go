@@ -146,8 +146,8 @@ func main() {
 			Type: apiv1.ServiceTypeClusterIP,
 			Ports: []apiv1.ServicePort{
 				{
-					Name: "7051",
-					Port: 7051,
+					Name: "80",
+					Port: 80,
 				},
 				{
 					Name: "7053",
