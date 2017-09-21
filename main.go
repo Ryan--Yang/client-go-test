@@ -91,7 +91,11 @@ func main() {
 		},
 		Spec: appsv1beta1.DeploymentSpec{
 			Replicas: int32Ptr(1),
-
+			Selector: &metav1.LabelSelector{
+				MatchLabels: map[string]string{
+					"service": "demo-deployment",
+				},
+			},
 			Template: apiv1.PodTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{
 					Labels: map[string]string{
